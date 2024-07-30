@@ -4,6 +4,7 @@ import './Todo.css'
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom"
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+
 export default function Todo(){
 
     
@@ -11,7 +12,9 @@ export default function Todo(){
         <div className="Todo">
 
             <BrowserRouter>
+                <Header/>
                     <Routes>
+                        
                         <Route path = '*' element = {<ErrorComponent/>}></Route>
                         <Route path = '/' element = {<LoginComponent/>}></Route>
                         <Route path = '/login' element = {<LoginComponent/>}></Route>
@@ -20,6 +23,7 @@ export default function Todo(){
 
 
                     </Routes>
+                <Footer/>
         
             </BrowserRouter>
         
@@ -57,7 +61,7 @@ function LoginComponent(){
 
 
     return(
-        <div className="Login">
+        <div className="Login container" >
             <div className="LoginForm">
                 <div>
                     {validCred && <div><h1>Success...valid credentials</h1></div> }
@@ -88,7 +92,7 @@ function WelcomeComponent(){
     const{username} = useParams()
 
     return(
-        <div className="Welcome">
+        <div className="Welcome container">
             <h1>Welcome {username}</h1>
             <h2><Link to="/manageTodos">Mannage your todos</Link></h2>
         
@@ -99,7 +103,7 @@ function WelcomeComponent(){
 function ErrorComponent(){
 
     return(
-        <div className="Error">
+        <div className="Error container">
             
             <h1>Oops something went wrong!!!</h1>
             <h2>Please recheck the URL and try again</h2>
@@ -122,8 +126,8 @@ function TodoList(){
                 ]
 
     return(
-       <div className="TodoList">
-            <table>
+       <div className="TodoList container">
+            <table className="table">
                 <thead>
                     <tr>
                         <th>Id</th>
@@ -153,7 +157,39 @@ function TodoList(){
             </table>
        </div>
     )
-                    
+}
+
+function Footer(){
+    return(
        
-    
+        <footer className="Footer">
+            <hr/>
+             <div className="conatiner"> Footer</div>
+           
+        </footer>
+    )
+}
+
+
+function Header(){
+    return(
+       <header className="Header">
+        <div>
+            <ul>
+                <li>
+                    Home
+                </li>
+                <li>
+                    Todos
+                </li>
+            </ul>
+        </div>
+        <div>
+            <ul>
+                <li>Logout</li>
+            </ul>
+        </div>
+        <hr/>
+       </header>
+    )
 }
