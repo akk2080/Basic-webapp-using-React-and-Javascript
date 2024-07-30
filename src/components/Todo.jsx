@@ -20,6 +20,7 @@ export default function Todo(){
                         <Route path = '/login' element = {<LoginComponent/>}></Route>
                         <Route path = '/welcome/:username' element = {<WelcomeComponent/>}></Route>
                         <Route path = '/manageTodos' element= {<TodoList/>}></Route>
+                        <Route path = '/logout' element= {<LogoutComponent/>}></Route>
 
 
                     </Routes>
@@ -67,14 +68,14 @@ function LoginComponent(){
                     {validCred && <div><h1>Success...valid credentials</h1></div> }
                 </div>
                 <div>
-                    <label>Name: 
+                    <label>User Name: </label>
                         <input type="text" name="username" value={username} onChange={updateUsername}/>
-                    </label>
+                    
                  </div>
                  <div>
-                    <label>Password: 
+                    <label>Password: </label>
                         <input type="password" name="username" value={password} onChange={UpdatePassword}/>
-                    </label>
+                  
                  </div>
                  <div>
                     <button name="submit" onClick={authenticate}>Submit</button>
@@ -127,6 +128,7 @@ function TodoList(){
 
     return(
        <div className="TodoList container">
+        <h1>Your Todos</h1>
             <table className="table">
                 <thead>
                     <tr>
@@ -162,7 +164,7 @@ function TodoList(){
 function Footer(){
     return(
        
-        <footer className="Footer">
+        <footer className="footer">
             <hr/>
              <div className="conatiner"> Footer</div>
            
@@ -173,23 +175,36 @@ function Footer(){
 
 function Header(){
     return(
-       <header className="Header">
-        <div>
-            <ul>
-                <li>
-                    Home
-                </li>
-                <li>
-                    Todos
-                </li>
-            </ul>
+        <header className="border-bottom border-light border-5 mb-5 p-2">
+        <div className="container">
+            <div className="row">
+                <nav className="navbar navbar-expand-lg">
+                    
+                    <div className="collapse navbar-collapse">
+                        <ul className="navbar-nav">
+                            <li className="nav-item fs-5"><Link className="nav-link" to="/welcome/akk2080">Home</Link></li>
+                            <li className="nav-item fs-5"><Link className="nav-link" to="/manageTodos">Todos</Link></li>
+                        </ul>
+                    </div>
+                    <ul className="navbar-nav">
+                        <li className="nav-item fs-5"><Link className="nav-link" to="/login">Login</Link></li>
+                        <li className="nav-item fs-5"><Link className="nav-link" to="/logout">Logout</Link></li>
+                    </ul>
+
+                </nav>
+            </div>
         </div>
-        <div>
-            <ul>
-                <li>Logout</li>
-            </ul>
+    </header>
+    )
+}
+
+function LogoutComponent() {
+    return (
+        <div className="LogoutComponent">
+            <h1>You are logged out!</h1>
+            <div>
+                Thank you for using our App. Come back soon!
+            </div>
         </div>
-        <hr/>
-       </header>
     )
 }
