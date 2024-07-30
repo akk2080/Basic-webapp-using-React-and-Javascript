@@ -12,9 +12,11 @@ export default function Todo(){
 
             <BrowserRouter>
                     <Routes>
+                        <Route path = '*' element = {<ErrorComponent/>}></Route>
                         <Route path = '/' element = {<LoginComponent/>}></Route>
                         <Route path = '/login' element = {<LoginComponent/>}></Route>
                         <Route path = '/welcome/:username' element = {<WelcomeComponent/>}></Route>
+
 
                     </Routes>
         
@@ -87,6 +89,18 @@ function WelcomeComponent(){
     return(
         <div className="Welcome">
             <h1>Welcome {username}</h1>
+        </div>
+    )
+}
+
+function ErrorComponent(){
+
+    return(
+        <div className="Error">
+            
+            <h1>Oops something went wrong!!!</h1>
+            <h2>Please recheck the URL and try again</h2>
+
         </div>
     )
 }
