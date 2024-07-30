@@ -8,6 +8,15 @@ import AuthProvider, {useAuth} from './security/AuthContext'
 
 export default function Todo(){
 
+    function AuthenticateUrl({children}){
+
+        const authContext = useAuth()
+       
+        if(authContext.isAuthenticated)
+            return children
+       return <Navigate to="/"/>
+    }
+
     
     return(
         <div className="Todo">
@@ -21,8 +30,8 @@ export default function Todo(){
                         <Route path = '*' element = {<ErrorComponent/>}></Route>
                         <Route path = '/' element = {<LoginComponent/>}></Route>
                         <Route path = '/login' element = {<LoginComponent/>}></Route>
-                        <Route path = '/welcome/:username' element = {<WelcomeComponent/>}></Route>
-                        <Route path = '/manageTodos' element= {<TodoList/>}></Route>
+                        <Route path = '/welcome/:username' element = {<AuthenticateUrl><WelcomeComponent/></AuthenticateUrl>}></Route>
+                        <Route path = '/manageTodos' element= {<AuthenticateUrl><TodoList/></AuthenticateUrl>}></Route>
                         <Route path = '/logout' element= {<LogoutComponent/>}></Route>
 
 
@@ -39,13 +48,14 @@ export default function Todo(){
 
 function LoginComponent(){
 
-    const [username, setUsername] = useState('current name')
+    const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [validCred, setValidCred] = useState(false)
+    // const [validCred, setValidCred] = useState(false)
+    const [notAuthorised, setNotAuthorised] = useState(false)
 
     const navigate = useNavigate()
 
-    const authContext = useAuth
+    const authContext = useAuth()
 
     function updateUsername(event){
 
@@ -63,11 +73,15 @@ function LoginComponent(){
         //     navigate(`/welcome/${username}`)
         // }
 
-        authContext.authenticate(username, password)
-        if(authContext.isAuthenticated)
+        
+        if(authContext.login(username, password)){
             navigate(`/welcome/${username}`)
-                
-            
+           
+        }
+
+        else  setNotAuthorised(true)
+        
+
     }
 
 
@@ -76,7 +90,7 @@ function LoginComponent(){
         <div className="Login container" >
             <div className="LoginForm">
                 <div>
-                    {validCred && <div><h1>Success...valid credentials</h1></div> }
+                    {notAuthorised && <div><h3>Invalid credentials</h3></div> }
                 </div>
                 <div>
                     <label>User Name: </label>
@@ -185,6 +199,9 @@ function Footer(){
 
 
 function Header(){
+
+    const authContext = useAuth()
+    const isAuthenticated = authContext.isAuthenticated
     return(
         <header className="border-bottom border-light border-5 mb-5 p-2">
         <div className="container">
@@ -193,13 +210,13 @@ function Header(){
                     
                     <div className="collapse navbar-collapse">
                         <ul className="navbar-nav">
-                            <li className="nav-item fs-5"><Link className="nav-link" to="/welcome/akk2080">Home</Link></li>
-                            <li className="nav-item fs-5"><Link className="nav-link" to="/manageTodos">Todos</Link></li>
+                            <li className="nav-item fs-5">{isAuthenticated && <Link className="nav-link" to="/welcome/akk2080">Home</Link>}</li>
+                            <li className="nav-item fs-5">{isAuthenticated && <Link className="nav-link" to="/manageTodos">Todos</Link>}</li>
                         </ul>
                     </div>
                     <ul className="navbar-nav">
-                        <li className="nav-item fs-5"><Link className="nav-link" to="/login">Login</Link></li>
-                        <li className="nav-item fs-5"><Link className="nav-link" to="/logout">Logout</Link></li>
+                        <li className="nav-item fs-5">{!isAuthenticated && <Link className="nav-link" to="/login">Login</Link>}</li>
+                        <li className="nav-item fs-5">{isAuthenticated && <Link className="nav-link" to="/logout">Logout</Link>}</li>
                     </ul>
 
                 </nav>
@@ -210,6 +227,10 @@ function Header(){
 }
 
 function LogoutComponent() {
+
+    const authContext = useAuth()
+
+    authContext.logout()
     return (
         <div className="LogoutComponent">
             <h1>You are logged out!</h1>
@@ -217,5 +238,7 @@ function LogoutComponent() {
                 Thank you for using our App. Come back soon!
             </div>
         </div>
+
+     
     )
 }
