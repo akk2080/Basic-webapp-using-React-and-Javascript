@@ -1,7 +1,7 @@
 import { eventWrapper } from "@testing-library/user-event/dist/utils"
 import { useState } from "react"
 import './Todo.css'
-import { Navigate, useNavigate } from "react-router-dom"
+import { Navigate, useNavigate, useParams } from "react-router-dom"
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 export default function Todo(){
@@ -14,7 +14,7 @@ export default function Todo(){
                     <Routes>
                         <Route path = '/' element = {<LoginComponent/>}></Route>
                         <Route path = '/login' element = {<LoginComponent/>}></Route>
-                        <Route path = '/welcome' element = {<WelcomeComponent/>}></Route>
+                        <Route path = '/welcome/:username' element = {<WelcomeComponent/>}></Route>
 
                     </Routes>
         
@@ -45,7 +45,7 @@ function LoginComponent(){
     function authenticate(){
         if(username === "akk2080" && password === "hello123"){
             setValidCred(true)
-            navigate('/welcome')
+            navigate(`/welcome/${username}`)
         }
                 
             
@@ -81,9 +81,12 @@ function LoginComponent(){
 }
 
 function WelcomeComponent(){
+
+    const{username} = useParams()
+
     return(
         <div className="Welcome">
-            <h1>Welcome </h1>
+            <h1>Welcome {username}</h1>
         </div>
     )
 }
