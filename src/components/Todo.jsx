@@ -3,6 +3,7 @@ import { useState } from "react"
 import './Todo.css'
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom"
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import AuthProvider, {useAuth} from './security/AuthContext'
 
 
 export default function Todo(){
@@ -10,6 +11,8 @@ export default function Todo(){
     
     return(
         <div className="Todo">
+
+            <AuthProvider>
 
             <BrowserRouter>
                 <Header/>
@@ -27,6 +30,8 @@ export default function Todo(){
                 <Footer/>
         
             </BrowserRouter>
+
+            </AuthProvider>
         
         </div>
     )
@@ -40,6 +45,8 @@ function LoginComponent(){
 
     const navigate = useNavigate()
 
+    const authContext = useAuth
+
     function updateUsername(event){
 
         setUsername(event.target.value)
@@ -51,10 +58,14 @@ function LoginComponent(){
     }
 
     function authenticate(){
-        if(username === "akk2080" && password === "hello123"){
-            setValidCred(true)
+        // if(username === "akk2080" && password === "hello123"){
+        //     setValidCred(true)
+        //     navigate(`/welcome/${username}`)
+        // }
+
+        authContext.authenticate(username, password)
+        if(authContext.isAuthenticated)
             navigate(`/welcome/${username}`)
-        }
                 
             
     }
