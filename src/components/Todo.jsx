@@ -12,6 +12,7 @@ import TodoList from "./TodoList";
 import LogoutComponent from "./Logout";
 import Header from "./Header";
 import Footer from "./Footer";
+import UpdateTodoComponent from "./UpdateTodo";
 
 
 
@@ -41,11 +42,13 @@ export default function Todo(){
                         <Route path = '/login' element = {<LoginComponent/>}></Route>
                         <Route path = '/welcome/:username' element = {<AuthenticateUrl><WelcomeComponent/></AuthenticateUrl>}></Route>
                         <Route path = '/manageTodos' element= {<AuthenticateUrl><TodoList/></AuthenticateUrl>}></Route>
+                        <Route path = '/updateTodo/:id' element= {<AuthenticateUrl><UpdateTodoComponent/></AuthenticateUrl>}></Route>
                         <Route path = '/logout' element= {<LogoutComponent/>}></Route>
 
 
+
                     </Routes>
-                <Footer/>
+                {/* <Footer/> */}
         
             </BrowserRouter>
 
