@@ -3,9 +3,10 @@ import {useNavigate, useParams} from 'react-router-dom'
 
 import { useAuth } from './security/AuthContext'
 
-import { retrieveTodoApi, updateTodoApi } from './Api/TodoApiService'
+import { addTodoApi, retrieveTodoApi, updateTodoApi } from './Api/TodoApiService'
 
 import {Formik, Form, Field, ErrorMessage} from 'formik'
+import moment from 'moment/moment'
 
 function UpdateTodoComponent(){
     
@@ -26,14 +27,21 @@ function UpdateTodoComponent(){
         )
 
     function retrieveTodos(){
+
+        if(id != -1){
+            retrieveTodoApi(username, id)
+            .then(response => {
+                setDescription(response.data.description)
+                setTargetDate(response.data.targetDate)
+            })
+            .catch(error => console.log(error))
+        }
+
+       
+        }
         
-        retrieveTodoApi(username, id)
-        .then(response => {
-            setDescription(response.data.description)
-            setTargetDate(response.data.targetDate)
-        })
-        .catch(error => console.log(error))
-    }
+       
+    
 
     function onSubmit(values) {
         const todo = {
@@ -45,9 +53,19 @@ function UpdateTodoComponent(){
 
         }
 
-        updateTodoApi(username, id, todo)
-        .then(response => navigate('/manageTodos'))
-        .catch(error => console.log(error))
+        if(id != -1){
+            updateTodoApi(username, id, todo)
+            .then(response => navigate('/manageTodos'))
+            .catch(error => console.log(error))
+        }
+
+        else{
+            addTodoApi(username, todo)
+            .then(response => navigate('/manageTodos'))
+            .catch(error => console.log(error))
+        }
+
+        
 
         console.log(values)
     }
@@ -62,7 +80,7 @@ function UpdateTodoComponent(){
             errors.description = 'Enter atleast 5 characters'
         }
 
-        if(values.targetDate == null) {
+        if(values.targetDate == null || values.targetDate == '' || !moment(values.targetDate).isValid()) {
             errors.targetDate = 'Enter a target date'
         }
 

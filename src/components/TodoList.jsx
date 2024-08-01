@@ -47,6 +47,10 @@ function TodoList(){
         navigate(`/updateTodo/${id}`)
     }
 
+    function add(){
+        navigate(`/updateTodo/-1`)
+    }
+
 
     
 
@@ -86,6 +90,7 @@ function TodoList(){
                 </tbody>
 
             </table>
+            <button className="btn btn-success" name="addTodo" onClick={add}>Add Todo</button>
        </div>
     )
 }
