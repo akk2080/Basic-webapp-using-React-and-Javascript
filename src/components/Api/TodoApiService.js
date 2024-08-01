@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiClient = axios.create(
+export const apiClient = axios.create(
     {
         baseURL :'http://localhost:8080'
     }
@@ -18,3 +18,11 @@ export const retrieveTodoApi
 export const updateTodoApi = (username, id, todo) => apiClient.put(`/users/${username}/todos/${id}`, todo)
 
 export const addTodoApi = (username, todo) => apiClient.post(`/users/${username}/todos`, todo)
+
+
+export const executeBasicAuthenticationService
+    = (token) => apiClient.get(`/basicauth`,{
+        headers: {
+            Authorization: token
+        }
+    })

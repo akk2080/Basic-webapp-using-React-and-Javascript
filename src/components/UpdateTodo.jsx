@@ -28,7 +28,7 @@ function UpdateTodoComponent(){
 
     function retrieveTodos(){
 
-        if(id != -1){
+        if(id !== -1){
             retrieveTodoApi(username, id)
             .then(response => {
                 setDescription(response.data.description)
@@ -53,7 +53,7 @@ function UpdateTodoComponent(){
 
         }
 
-        if(id != -1){
+        if(id !== -1){
             updateTodoApi(username, id, todo)
             .then(response => navigate('/manageTodos'))
             .catch(error => console.log(error))

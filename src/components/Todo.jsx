@@ -30,11 +30,13 @@ export default function Todo(){
     
     return(
         <div className="Todo">
+           
 
             <AuthProvider>
+            
 
             <BrowserRouter>
-                <Header/>
+            <Header/>
                     <Routes>
                         
                         <Route path = '*' element = {<ErrorComponent/>}></Route>
@@ -43,6 +45,7 @@ export default function Todo(){
                         <Route path = '/welcome/:username' element = {<AuthenticateUrl><WelcomeComponent/></AuthenticateUrl>}></Route>
                         <Route path = '/manageTodos' element= {<AuthenticateUrl><TodoList/></AuthenticateUrl>}></Route>
                         <Route path = '/updateTodo/:id' element= {<AuthenticateUrl><UpdateTodoComponent/></AuthenticateUrl>}></Route>
+                       
                         <Route path = '/logout' element= {<LogoutComponent/>}></Route>
 
 

@@ -26,14 +26,14 @@ function LoginComponent(){
         setPassword(event.target.value)
     }
 
-    function authenticate(){
+    async function authenticate(){
         // if(username === "akk2080" && password === "hello123"){
         //     setValidCred(true)
         //     navigate(`/welcome/${username}`)
         // }
 
         
-        if(authContext.login(username, password)){
+        if(await authContext.login(username, password)){
             navigate(`/welcome/${username}`)
            
         }
